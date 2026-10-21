@@ -1,0 +1,27 @@
+#!/bin/sh
+# Init script for the aesdsocket daemon, installed as /etc/init.d/S99aesdsocket
+
+DAEMON=/usr/bin/aesdsocket
+NAME=aesdsocket
+
+case "$1" in
+    start)
+        echo "Starting ${NAME}"
+        start-stop-daemon -S -n ${NAME} -a ${DAEMON} -- -d
+        ;;
+    stop)
+        echo "Stopping ${NAME}"
+        # SIGTERM lets aesdsocket close its sockets and remove its data file
+        start-stop-daemon -K -n ${NAME} -s TERM
+        ;;
+    restart)
+        "$0" stop
+        "$0" start
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0

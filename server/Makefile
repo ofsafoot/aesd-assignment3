@@ -5,7 +5,8 @@ ifeq ($(origin CC),default)
 CC := $(CROSS_COMPILE)gcc
 endif
 CFLAGS ?= -g -O0
-CFLAGS += -Wall -Werror
+# override: keep the warning flags when CFLAGS is given on the command line (buildroot)
+override CFLAGS += -Wall -Werror
 
 TARGET := aesdsocket
 OBJS := aesdsocket.o
